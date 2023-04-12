@@ -553,22 +553,16 @@ function ResidentEvil4(data)
 // REMAKE
 function ResidentEvil4Remake(data)
 {
-	// In-game timer disabled, but code left in if desired 
 	//DrawTextBlock("IGT", data.IGTFormattedString, ["white", "green2"], HideIGT);
-	DrawTextBlock("Kill Counter", data.ChapterKillCount, ["white", "green2"], HideIGT);
+	DrawTextBlock("Kills", data.GameStatsKillCountElement.Count, ["white", "green2"]);
 	let _colors = GetColor(data.PlayerHealth);
-	DrawProgressBar(data.PlayerHealth.CurrentHealth, data.PlayerHealth.MaximumHealth, data.PlayerHealth.Percentage, "Leon: ", _colors);
-	// VVV Original text block with all stats in a single line. VVV
-	//DrawTextBlocks(["Rank", "ActionPoint", "ItemPoint"], [data.Rank.Rank, data.Rank.ActionPoint, data.Rank.ItemPoint], ["white", "green2", "green2"], HideDA);
-	// VVV Alternate text blocks, each with their own line. VVV
-	DrawTextBlock("Rank", data.Rank.Rank, ["white", "green2"], HideDA);
-	DrawTextBlock("Action Points", data.Rank.ActionPoint, ["white", "green2"], HideDA);
-	DrawTextBlock("Item Points", data.Rank.ItemPoint, ["white", "green2"], HideDA);
+	DrawProgressBar(data.PlayerHealth.CurrentHitPoint, data.PlayerHealth.DefaultHitPoint, data.PlayerHealth.Percentage, "Leon: ", _colors);
+	DrawTextBlocks(["Rank", "ActionPoint", "ItemPoint"], [data.Rank.Rank, data.Rank.ActionPoint, data.Rank.ItemPoint], ["white", "green2", "green2"], HideDA);
 	var filterdEnemies = data.EnemyHealth.filter(m => { return (m.IsAlive) });
 	filterdEnemies.sort(function (a, b) {
-		return Asc(a.CurrentHealth, b.CurrentHealth) || Desc(a.CurrentHealth, b.CurrentHealth);
+		return Asc(a.CurrentHitPoint, b.CurrentHitPoint) || Desc(a.CurrentHitPoint, b.CurrentHitPoint);
 	}).forEach(function (item, index, arr) {
-		DrawProgressBar(item.CurrentHealth, item.MaximumHealth, item.Percentage, "", ["danger", "red"]);
+		DrawProgressBar(item.CurrentHitPoint, item.DefaultHitPoint, item.Percentage, "", ["danger", "red"]);
 	});
 }
 
